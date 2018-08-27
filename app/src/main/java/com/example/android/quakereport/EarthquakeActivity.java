@@ -17,8 +17,6 @@ package com.example.android.quakereport;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.sql.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
@@ -50,6 +49,10 @@ public class EarthquakeActivity extends AppCompatActivity {
 
     private class EarthquakeAdapter extends ArrayAdapter<Earthquake>{
 
+        private static final String LOCATION_SEPARATOR = " of ";
+        String primaryLocation;
+        String locationOffset;
+
         public EarthquakeAdapter(Context context, List<Earthquake> earthquakes){
             super(context, 0, earthquakes);
         }
@@ -64,16 +67,43 @@ public class EarthquakeActivity extends AppCompatActivity {
             }
 
             Earthquake currentEarthquake = getItem(position);
+            String originalLocation = currentEarthquake.getLocation();
+
+            if (originalLocation.contains(LOCATION_SEPARATOR)) {
+                String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+                locationOffset = parts[0] + LOCATION_SEPARATOR;
+                primaryLocation = parts[1];
+            } else {
+                locationOffset = getContext().getString(R.string.near_the);
+                primaryLocation = originalLocation;
+            }
+
+            Date dateObject = new Date(currentEarthquake.getUnixEpochTime());
+            String formattedDate = formatDate(dateObject);
 
             TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
-            TextView locationView = (TextView) listItemView.findViewById(R.id.location);
+            TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
+            TextView locationOffsetView = (TextView) listItemView.findViewById(R.id.location_offset);
             TextView dateView = (TextView) listItemView.findViewById(R.id.date);
+            TextView timeView = (TextView) listItemView.findViewById(R.id.time);
 
             magnitudeView.setText(currentEarthquake.getMagnitude());
-            locationView.setText(currentEarthquake.getLocation());
-            dateView.setText(currentEarthquake.getDate());
+            primaryLocationView.setText(primaryLocation);
+            locationOffsetView.setText(locationOffset);
+            dateView.setText(formattedDate);
+            timeView.setText(formatTime(dateObject));
 
             return listItemView;
         }
+    }
+
+    private String formatDate(Date dateObject){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        return dateFormat.format(dateObject);
+    }
+
+    private String formatTime(Date dateObject){
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+        return timeFormat.format(dateObject);
     }
 }

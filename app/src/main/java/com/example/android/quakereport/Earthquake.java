@@ -3,12 +3,12 @@ package com.example.android.quakereport;
 public class Earthquake {
     private String mLocation;
     private String mMagnitude;
-    private String mDate;
+    private long mUnixEpochTime;
 
-    public Earthquake(String magnitude, String location,  String date) {
+    public Earthquake(String magnitude, String location,  long unixEpochTime) {
         mMagnitude = magnitude;
         mLocation = location;
-        mDate = date;
+        mUnixEpochTime = unixEpochTime;
     }
 
     public String getLocation() {
@@ -19,7 +19,7 @@ public class Earthquake {
         return mMagnitude;
     }
 
-    public String getDate() {
-        return mDate;
+    public long getUnixEpochTime(){
+        return mUnixEpochTime;
     }
 }

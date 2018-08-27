@@ -14,11 +14,18 @@
         tools:text="8.9"/>
 
     <TextView
+        android:id="@+id/location_offset"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/location"
         android:layout_weight="1"
-        tools:text="San Francisco, CA"/>
+        tools:text="30km S of" />
+
+    <TextView
+        android:id="@+id/primary_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="San Francisco, CA" />
 
     <TextView
         android:layout_width="0dp"
@@ -26,5 +33,12 @@
         android:id="@+id/date"
         android:layout_weight="1"
         tools:text="6 Mar 2019"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:layout_weight="1"
+        tools:text="12:00 AM"/>
 
 </LinearLayout>
