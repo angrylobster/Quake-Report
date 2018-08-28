@@ -2,24 +2,30 @@ package com.example.android.quakereport;
 
 public class Earthquake {
     private String mLocation;
-    private String mMagnitude;
+    private double mMagnitude;
     private long mUnixEpochTime;
+    private String mUrl;
 
-    public Earthquake(String magnitude, String location,  long unixEpochTime) {
+    public Earthquake(double magnitude, String location,  long unixEpochTime, String url) {
         mMagnitude = magnitude;
         mLocation = location;
         mUnixEpochTime = unixEpochTime;
+        mUrl = url;
     }
 
     public String getLocation() {
         return mLocation;
     }
 
-    public String getMagnitude() {
+    public double getMagnitude() {
         return mMagnitude;
     }
 
     public long getUnixEpochTime(){
         return mUnixEpochTime;
+    }
+
+    public String getUrl() {
+        return mUrl;
     }
 }
